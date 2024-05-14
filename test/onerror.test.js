@@ -57,8 +57,8 @@ test('should use err.toString() instad of err.stack', t => {
   t.deepEqual(output, ['\n', '  Error: mock stack null\n', '\n'])
 })
 
-test.cb('should log an error in the handler in req/res app', t => {
-  t.plan(7)
+test('should log an error in the handler in req/res app', async t => {
+  t.plan(6)
   const APP_HOST = tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
@@ -69,22 +69,32 @@ test.cb('should log an error in the handler in req/res app', t => {
   const app = new Mali(PROTO_PATH, 'Greeter')
   t.truthy(app)
   app.use({ sayHello })
-  app.start(APP_HOST).then(server => {
-    t.truthy(server)
+  const server = await app.start(APP_HOST)
+  t.truthy(server)
 
-    const pd = pl.loadSync(PROTO_PATH)
-    const helloproto = grpc.loadPackageDefinition(pd).helloworld
-    const client = new helloproto.Greeter(APP_HOST, grpc.credentials.createInsecure())
-    const inspect = stderr.inspect()
-    client.sayHello({ name: 'Bob' }, (err, response) => {
-      t.truthy(err)
-      t.true(err.message.indexOf('boom') >= 0)
-      t.falsy(response)
-      inspect.restore()
-      const output = Array.isArray(inspect.output) ? inspect.output.join() : inspect.output
-      t.true(output.indexOf('Error: boom') > 0)
-      t.true(output.indexOf('at sayHello') > 0)
-      app.close().then(() => t.end())
+  const pd = pl.loadSync(PROTO_PATH)
+  const helloproto = grpc.loadPackageDefinition(pd).helloworld
+  const client = new helloproto.Greeter(APP_HOST, grpc.credentials.createInsecure())
+  const inspect = stderr.inspect()
+  try {
+    await new Promise((resolve, reject) => {
+      client.sayHello({ name: 'Bob' }, (err, response) => {
+        if (err) {
+          return reject(err)
+        }
+
+        resolve(response)
+      })
     })
-  })
+  } catch (err) {
+    error = err
+  }
+  t.truthy(error)
+  t.true(error.message.indexOf('boom') >= 0)
+  inspect.restore()
+  const output = Array.isArray(inspect.output) ? inspect.output.join() : inspect.output
+  t.true(output.indexOf('Error: boom') > 0)
+  t.true(output.indexOf('at sayHello') > 0)
+
+  await app.close()
 })
