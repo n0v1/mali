@@ -76,6 +76,7 @@ test('should log an error in the handler in req/res app', async t => {
   const helloproto = grpc.loadPackageDefinition(pd).helloworld
   const client = new helloproto.Greeter(APP_HOST, grpc.credentials.createInsecure())
   const inspect = stderr.inspect()
+  let error
   try {
     await new Promise((resolve, reject) => {
       client.sayHello({ name: 'Bob' }, (err, response) => {
