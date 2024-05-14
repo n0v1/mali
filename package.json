@@ -86,7 +86,8 @@
   "ava": {
     "files": [
       "test/*.test.js"
-    ]
+    ],
+    "concurrency": 1
   },
   "types": "index.d.ts",
   "nyc": {
