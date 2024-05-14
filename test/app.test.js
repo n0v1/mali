@@ -430,8 +430,9 @@ test('should handle req stream app', async t => {
   const pd = pl.loadSync(PROTO_PATH)
   const proto = grpc.loadPackageDefinition(pd).argservice
   const client = new proto.ArgService(APP_HOST, grpc.credentials.createInsecure())
-  const res = await new Promise(async (resolve, reject) => {
-    const call = client.writeStuff((err, response) => {
+  let call
+  const res = await new Promise((resolve, reject) => {
+    call = client.writeStuff((err, response) => {
       if (err) {
         return reject(err)
       }
@@ -439,13 +440,15 @@ test('should handle req stream app', async t => {
       resolve(response)
     })
 
-    for await (const d of getArrayData()) {
-      await sleep(_.random(10, 50))
+    async.eachSeries(getArrayData(), (d, asfn) => {
       call.write(d)
-    }
-    call.end()
-    await finished(call)
+      _.delay(asfn, _.random(10, 50))
+    }, () => {
+      call.end()
+    })
   })
+
+  await finished(call)
 
   t.truthy(res)
   t.truthy(res.message)
