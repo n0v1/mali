@@ -42,9 +42,14 @@ jobs:
       with:
         github-token: ${{ secrets.github_token }}
         parallel: true
+        flag-name: ${{ matrix.node-version }}
+
+  finish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
     - name: Coveralls Finished
-      if: success()
       uses: coverallsapp/github-action@master
       with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel-finished: true
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        parallel-finished: true
