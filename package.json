@@ -87,7 +87,8 @@
     "files": [
       "test/*.test.js"
     ],
-    "concurrency": 1
+    "concurrency": 1,
+    "serial": true
   },
   "types": "index.d.ts",
   "nyc": {
