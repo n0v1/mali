@@ -20,7 +20,7 @@ test.serial('should dynamically create service ', async t => {
   apps.push(app)
 
   app.use({ sayHello })
-  const server = await app.start(tu.getHost())
+  const server = await app.start(await tu.getHost())
   t.truthy(server)
   t.is(app.name, 'helloworld.Greeter')
 })
@@ -35,7 +35,7 @@ test.serial('should dynamically create service with name', async t => {
   apps.push(app)
 
   app.use({ sayHello })
-  const server = await app.start(tu.getHost())
+  const server = await app.start(await tu.getHost())
   t.truthy(server)
   t.is(app.name, 'helloworld.Greeter')
 })
@@ -50,7 +50,7 @@ test.serial('should dynamically create service without specifying a name and def
   apps.push(app)
 
   app.use({ sayHello })
-  const server = await app.start(tu.getHost())
+  const server = await app.start(await tu.getHost())
   t.truthy(server)
   t.is(app.name, 'helloworld.Greeter')
   t.truthy(app.data['helloworld.Greeter'].handlers['/helloworld.Greeter/SayHello'])
@@ -68,7 +68,7 @@ test.serial('should dynamically create service using addService() without specif
   apps.push(app)
 
   app.use({ sayHello })
-  const server = await app.start(tu.getHost())
+  const server = await app.start(await tu.getHost())
   t.truthy(server)
   t.is(app.name, 'helloworld.Greeter')
   t.truthy(app.data['helloworld.Greeter'].handlers['/helloworld.Greeter/SayHello'])
@@ -85,7 +85,7 @@ test.serial('should dynamically create service without a service name', async t 
   apps.push(app)
 
   app.use({ sayHello })
-  const server = await app.start(tu.getHost())
+  const server = await app.start(await tu.getHost())
   t.truthy(server)
 })
 
@@ -104,7 +104,7 @@ test.serial('should statically create service', async t => {
   apps.push(app)
 
   app.use({ sayHello })
-  const server = await app.start(tu.getHost())
+  const server = await app.start(await tu.getHost())
   t.truthy(server)
 })
 
@@ -123,7 +123,7 @@ test.serial('should statically create service without a service name', async t =
   apps.push(app)
 
   app.use({ sayHello })
-  const server = await app.start(tu.getHost())
+  const server = await app.start(await tu.getHost())
   t.truthy(server)
 })
 
@@ -144,7 +144,7 @@ test.serial('should dynamically create service using object specifying root and 
   apps.push(app)
 
   app.use({ sayHello })
-  const server = await app.start(tu.getHost())
+  const server = await app.start(await tu.getHost())
   t.truthy(server)
   await app.close()
 })
@@ -166,7 +166,7 @@ test.serial('should dynamically create service using object specifying root and 
   apps.push(app)
 
   app.use({ sayHello })
-  const server = await app.start(tu.getHost())
+  const server = await app.start(await tu.getHost())
   t.truthy(server)
   await app.close()
 })
@@ -181,7 +181,7 @@ test.serial('should dynamically create a named service from defition with multip
   apps.push(app)
 
   app.use({ sayHello })
-  const server = await app.start(tu.getHost())
+  const server = await app.start(await tu.getHost())
   t.truthy(server)
 })
 
@@ -197,7 +197,7 @@ test.serial('should dynamically create all named services from defition with mul
   apps.push(app)
 
   app.use({ sayHello })
-  const server = await app.start(tu.getHost())
+  const server = await app.start(await tu.getHost())
   t.truthy(server)
 })
 
@@ -213,7 +213,7 @@ test.serial('should dynamically create all services from defition with multiple 
   apps.push(app)
 
   app.use({ sayHello })
-  const server = await app.start(tu.getHost())
+  const server = await app.start(await tu.getHost())
   t.truthy(server)
 })
 
@@ -232,7 +232,7 @@ test.serial('should statically create a named service from defition with multipl
   apps.push(app)
 
   app.use({ sayHello })
-  const server = await app.start(tu.getHost())
+  const server = await app.start(await tu.getHost())
   t.truthy(server)
 })
 
@@ -253,7 +253,7 @@ test.serial('should statically create all named services from defition with mult
   apps.push(app)
 
   app.use({ sayHello })
-  const server = await app.start(tu.getHost())
+  const server = await app.start(await tu.getHost())
   t.truthy(server)
 })
 
@@ -274,7 +274,7 @@ test.serial('should statically create all services from defition with multiple s
   apps.push(app)
 
   app.use({ sayHello })
-  const server = await app.start(tu.getHost())
+  const server = await app.start(await tu.getHost())
   t.truthy(server)
 })
 
@@ -288,7 +288,7 @@ test.serial('should dynamically create a named service from multi package proto'
   apps.push(app)
 
   app.use({ sayHello })
-  const server = await app.start(tu.getHost())
+  const server = await app.start(await tu.getHost())
   t.truthy(server)
 })
 
@@ -326,6 +326,6 @@ test.serial('should dynamically create service from multiple protos', async t =>
   t.true(typeof app.data['argservice.ArgService'].handlers['/argservice.ArgService/DoSomething'][0] === 'function')
   t.is(app.data['argservice.ArgService'].handlers['/argservice.ArgService/DoSomething'][0], doSomething)
 
-  const server = await app.start(tu.getHost())
+  const server = await app.start(await tu.getHost())
   t.truthy(server)
 })

@@ -57,6 +57,7 @@
     "async": "^3.2.4",
     "ava": "^5.3.1",
     "benchmarkify": "^3.0.0",
+    "get-port": "^7.1.0",
     "google-protobuf": "^3.21.0",
     "highland": "3.0.0-beta.10",
     "is-ci": "^3.0.1",
@@ -87,8 +88,7 @@
     "files": [
       "test/*.test.js"
     ],
-    "concurrency": 1,
-    "serial": true
+    "concurrency": 1
   },
   "types": "index.d.ts",
   "nyc": {
