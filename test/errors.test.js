@@ -600,6 +600,8 @@ test('should handle error in response stream', async t => {
   t.true(errCalled)
   t.truthy(err)
   t.true(err.message.indexOf('stream error') >= 0)
+
+  await app.close()
 })
 
 test('should handle an error in the handler of duplex call', async t => {
