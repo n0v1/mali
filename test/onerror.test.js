@@ -59,7 +59,7 @@ test('should use err.toString() instad of err.stack', t => {
 
 test('should log an error in the handler in req/res app', async t => {
   t.plan(6)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
   function sayHello (ctx) {

@@ -25,10 +25,13 @@ const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
 const apps = []
 
-const APP1_HOST = tu.getHost()
-const APP2_HOST = tu.getHost()
+let APP1_HOST
+let APP2_HOST
 
 test.before('should merge properties', async t => {
+  APP1_HOST = await tu.getHost()
+  APP2_HOST = await tu.getHost()
+
   function sayHello (ctx) {
     ctx.res = { message: ctx.msg }
   }
@@ -94,7 +97,7 @@ test('should not affect the original prototype', async t => {
 
 test('should have correct properties for req / res', async t => {
   t.plan(19)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
   function sayHello (ctx) {
@@ -142,7 +145,7 @@ test('should have correct properties for req / res', async t => {
 
 test('should have correct properties for req / res with proto', async t => {
   t.plan(19)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
   const messages = require('./static/helloworld_pb')
@@ -195,7 +198,7 @@ test('should have correct properties for req / res with proto', async t => {
 
 test('should have correct properties res stream request', async t => {
   t.plan(18)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/resstream.proto')
 
   function listStuff (ctx) {
@@ -247,7 +250,7 @@ test('should have correct properties res stream request', async t => {
 
 test('should have correct properties for req stream', async t => {
   t.plan(20)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/reqstream.proto')
 
   async function writeStuff (ctx) {
@@ -325,7 +328,7 @@ test('should have correct properties for req stream', async t => {
 
 test('should have correct properties for duplex call', async t => {
   t.plan(19)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/duplex.proto')
 
   async function processStuff (ctx) {
@@ -397,7 +400,7 @@ test('should have correct properties for duplex call', async t => {
 
 test('should reset locals in context req / res', async t => {
   t.plan(12)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
   function sayHello (ctx) {

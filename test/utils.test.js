@@ -92,7 +92,7 @@ test('getCallTypeFromDescriptor() should get call type from DUPLEX call', async 
 
 test('getCallTypeFromCall() should get call type from UNARY call', async t => {
   t.plan(1)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
   let callType
@@ -124,7 +124,7 @@ test('getCallTypeFromCall() should get call type from UNARY call', async t => {
 
 test('getCallTypeFromCall() should get call type from RESPONSE_STREAM call', async t => {
   t.plan(1)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/resstream.proto')
 
   let callType
@@ -160,7 +160,7 @@ test('getCallTypeFromCall() should get call type from RESPONSE_STREAM call', asy
 
 test('getCallTypeFromCall() should get call type from REQUEST_STREAM call', async t => {
   t.plan(1)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/reqstream.proto')
 
   async function doWork (inputStream) {
@@ -221,7 +221,7 @@ test('getCallTypeFromCall() should get call type from REQUEST_STREAM call', asyn
 
 test('getCallTypeFromCall() should get call type from DUPLEX call', async t => {
   t.plan(1)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/duplex.proto')
 
   let callType

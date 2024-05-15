@@ -152,7 +152,7 @@ test('app.start() with a default port from OS with ""', async t => {
 
 test('app.start() with param', async t => {
   t.plan(5)
-  const PORT = tu.getPort()
+  const PORT = await tu.getPort()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
   function sayHello (ctx) {
@@ -173,7 +173,7 @@ test('app.start() with param', async t => {
 
 test('app.start() with port param and invalid creds', async t => {
   t.plan(5)
-  const PORT = tu.getPort()
+  const PORT = await tu.getPort()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
   function sayHello (ctx) {
@@ -205,7 +205,7 @@ test('app.start() should throw when binding to taken port', async t => {
   }
 
   const app = new Mali({ file: 'protos/multipkg.proto', root: __dirname })
-  const port = tu.getHost()
+  const port = await tu.getHost()
 
   app.use({ sayHello })
   const server = await app.start(port)
@@ -226,7 +226,7 @@ test('app.start() should throw when binding to taken port', async t => {
 
 test('should handle req/res request', async t => {
   t.plan(4)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
   function sayHello (ctx) {
@@ -257,7 +257,7 @@ test('should handle req/res request', async t => {
 
 test('should handle multiple protos request', async t => {
   t.plan(4)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_ROOT_FOLDER = path.resolve(__dirname, './protos')
   const PROTO_ROOT_MULTIPLE = path.resolve(__dirname, './protosmultiple')
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
@@ -291,7 +291,7 @@ test('should handle multiple protos request', async t => {
 
 test('should handle multiple protos with second folder definitions request', async t => {
   t.plan(4)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_ROOT_FOLDER = path.resolve(__dirname, './protos')
   const PROTO_ROOT_MULTIPLE = path.resolve(__dirname, './protosmultiple')
   const PROTO_PATH = path.resolve(__dirname, './protosmultiple/hellomultiple.proto')
@@ -325,7 +325,7 @@ test('should handle multiple protos with second folder definitions request', asy
 
 test('should handle req/res request where res is a promise', async t => {
   t.plan(4)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
   function sayHello (ctx) {
@@ -360,7 +360,7 @@ test('should handle req/res request where res is a promise', async t => {
 
 test('should handle res stream request', async t => {
   t.plan(3)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/resstream.proto')
 
   function listStuff (ctx) {
@@ -395,7 +395,7 @@ test('should handle res stream request', async t => {
 
 test('should handle req stream app', async t => {
   t.plan(5)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/reqstream.proto')
 
   async function doWork (inputStream) {
@@ -459,7 +459,7 @@ test('should handle req stream app', async t => {
 
 test('should handle duplex call', async t => {
   t.plan(3)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/duplex.proto')
   async function processStuff (ctx) {
     ctx.req.on('data', d => {
@@ -510,8 +510,8 @@ test('should handle duplex call', async t => {
 
 test('should start multipe servers from same application and handle requests', async t => {
   t.plan(10)
-  const APP_HOST1 = tu.getHost()
-  const APP_HOST2 = tu.getHost()
+  const APP_HOST1 = await tu.getHost()
+  const APP_HOST2 = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
   function sayHello (ctx) {
@@ -554,7 +554,7 @@ test('should work with multi package proto', async t => {
   }
 
   const app = new Mali({ file: 'protos/multipkg.proto', root: __dirname })
-  const port = tu.getHost()
+  const port = await tu.getHost()
 
   app.use({ sayHello })
   const server = await app.start(port)

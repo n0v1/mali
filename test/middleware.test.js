@@ -16,7 +16,7 @@ const PROTO_PATH = path.resolve(__dirname, './protos/transform.proto')
 
 const apps = []
 
-const DYNAMIC_HOST = tu.getHost()
+let DYNAMIC_HOST
 
 const gmwcalled = {}
 
@@ -86,6 +86,8 @@ function payloadrot13 (ctx, next) {
 }
 
 test.before('should dynamically create service', async t => {
+  DYNAMIC_HOST = await tu.getHost()
+
   // Handlers
   async function upper (ctx) {
     ctx.res = {
@@ -266,7 +268,7 @@ test('mutate + payload middleware', async t => {
 
 test('should compose middleware w/ async functions', async t => {
   t.plan(5)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
   const calls = []
 
@@ -319,7 +321,7 @@ test('should compose middleware w/ async functions', async t => {
 
 test('should not call middleware downstream of one that does not call next', async t => {
   t.plan(5)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
   const calls = []
 
@@ -396,7 +398,7 @@ test('multi: call multiple services with middleware', async t => {
     Greeter2: { sayHello: hello }
   })
 
-  const host = tu.getHost()
+  const host = await tu.getHost()
   const server = await app.start(host)
   t.truthy(server)
 

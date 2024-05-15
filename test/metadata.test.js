@@ -39,7 +39,7 @@ const duplexproto = grpc.loadPackageDefinition(dpd).argservice
 
 test('req/res: no metadata', async t => {
   t.plan(13)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
   function sayHello (ctx) {
@@ -93,7 +93,7 @@ test('req/res: no metadata', async t => {
 
 test('req/res: header metadata set', async t => {
   t.plan(14)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   function sayHello (ctx) {
     ctx.set('foo', 'bar')
@@ -148,7 +148,7 @@ test('req/res: header metadata set', async t => {
 
 test('req/res: header metadata set even if error occurred', async t => {
   t.plan(15)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   function sayHello (ctx) {
     ctx.set('foo', 'bar')
@@ -213,7 +213,7 @@ test('req/res: header metadata set even if error occurred', async t => {
 
 test('req/res: header metadata sent using ctx.sendMetadata', async t => {
   t.plan(14)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   function sayHello (ctx) {
     ctx.sendMetadata({ baz: 'foo' })
@@ -268,7 +268,7 @@ test('req/res: header metadata sent using ctx.sendMetadata', async t => {
 
 test('req/res: header metadata sent using ctx.sendMetadata(Metadata)', async t => {
   t.plan(14)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   function sayHello (ctx) {
     const md = new grpc.Metadata()
@@ -324,7 +324,7 @@ test('req/res: header metadata sent using ctx.sendMetadata(Metadata)', async t =
 
 test('req/res: header metadata set and sent using ctx.sendMetadata', async t => {
   t.plan(14)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   function sayHello (ctx) {
     ctx.set('foo', 'bar')
@@ -379,7 +379,7 @@ test('req/res: header metadata set and sent using ctx.sendMetadata', async t => 
 
 test('req/res: header metadata set and then new metadata sent using ctx.sendMetadata', async t => {
   t.plan(15)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   function sayHello (ctx) {
     ctx.set('foo', 'bar')
@@ -437,7 +437,7 @@ test(
   'req/res: header metadata ctx.sendMetadata and then set new metadata, should get first',
   async t => {
     t.plan(15)
-    const APP_HOST = tu.getHost()
+    const APP_HOST = await tu.getHost()
 
     function sayHello (ctx) {
       ctx.sendMetadata({ biz: 'baz' })
@@ -496,7 +496,7 @@ test(
   'req/res: header metadata send invalid param usingctx.sendMetadata and then set new metadata, should get 2nd',
   async t => {
     t.plan(14)
-    const APP_HOST = tu.getHost()
+    const APP_HOST = await tu.getHost()
 
     function sayHello (ctx) {
       ctx.set('foo', 'bar')
@@ -552,7 +552,7 @@ test(
 
 test('req/res: trailer metadata set', async t => {
   t.plan(13)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   function sayHello (ctx) {
     ctx.setStatus('foo', 'bar')
@@ -607,7 +607,7 @@ test('req/res: trailer metadata set', async t => {
 
 test('req/res: header and trailer metadata set', async t => {
   t.plan(14)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   function sayHello (ctx) {
     ctx.set('asdf', 'qwerty')
@@ -664,7 +664,7 @@ test('req/res: header and trailer metadata set', async t => {
 
 test('res stream: no metadata', async t => {
   t.plan(12)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   function listStuff (ctx) {
     ctx.res = hl(getArrayData()).map(d => {
@@ -717,7 +717,7 @@ test('res stream: no metadata', async t => {
 
 test('res stream: header metadata set', async t => {
   t.plan(13)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   function listStuff (ctx) {
     ctx.set('foo', 'bar')
@@ -772,7 +772,7 @@ test('res stream: header metadata set', async t => {
 
 test('res stream: header metadata sendMetadata(object)', async t => {
   t.plan(13)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   function listStuff (ctx) {
     ctx.sendMetadata({ foo: 'bar' })
@@ -829,7 +829,7 @@ test(
   'res stream: header metadata sendMetadata(object) with set after, set should not be sent',
   async t => {
     t.plan(13)
-    const APP_HOST = tu.getHost()
+    const APP_HOST = await tu.getHost()
 
     function listStuff (ctx) {
       ctx.sendMetadata({ asdf: 'qwerty' })
@@ -886,7 +886,7 @@ test(
 
 test('res stream: trailer metadata set', async t => {
   t.plan(12)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   function listStuff (ctx) {
     ctx.setStatus('foo', 'bar')
@@ -942,7 +942,7 @@ test('res stream: trailer metadata set', async t => {
 
 test('res stream: trailer metadata set and also sent using res.end() should get 2nd', async t => {
   t.plan(12)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   function listStuff (ctx) {
     ctx.setStatus('foo', 'bar')
@@ -1002,7 +1002,7 @@ test('res stream: trailer metadata set and also sent using res.end() should get 
 
 test('res stream: trailer metadata set and also use empty res.end() should get 1st', async t => {
   t.plan(12)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   function listStuff (ctx) {
     ctx.setStatus('foo', 'bar')
@@ -1062,7 +1062,7 @@ test('res stream: trailer metadata set and also use empty res.end() should get 1
 
 test('res stream: trailer metadata set and also use invalid res.end() should get 1st', async t => {
   t.plan(12)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   function listStuff (ctx) {
     ctx.setStatus('foo', 'bar')
@@ -1122,7 +1122,7 @@ test('res stream: trailer metadata set and also use invalid res.end() should get
 
 test('res stream: header and trailer metadata set', async t => {
   t.plan(13)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   function listStuff (ctx) {
     ctx.set('asdf', 'qwerty')
@@ -1180,7 +1180,7 @@ test('res stream: header and trailer metadata set', async t => {
 
 test('duplex: no metadata', async t => {
   t.plan(12)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   async function processStuff (ctx) {
     ctx.req.on('data', d => {
@@ -1257,7 +1257,7 @@ test('duplex: no metadata', async t => {
 
 test('duplex: header metadata set', async t => {
   t.plan(13)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   async function processStuff (ctx) {
     ctx.set('foo', 'bar')
@@ -1336,7 +1336,7 @@ test('duplex: header metadata set', async t => {
 
 test('duplex: header metadata sendMetadata(object)', async t => {
   t.plan(13)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   async function processStuff (ctx) {
     ctx.sendMetadata({ foo: 'bar' })
     ctx.req.on('data', d => {
@@ -1414,7 +1414,7 @@ test('duplex: header metadata sendMetadata(object)', async t => {
 
 test('duplex: header metadata sendMetadata(object) with set after, set no effect', async t => {
   t.plan(13)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   async function processStuff (ctx) {
     ctx.sendMetadata({ asdf: 'qwerty' })
     ctx.set('foo', 'bar')
@@ -1493,7 +1493,7 @@ test('duplex: header metadata sendMetadata(object) with set after, set no effect
 
 test('duplex: trailer metadata', async t => {
   t.plan(12)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   async function processStuff (ctx) {
     ctx.setStatus('foo', 'bar')
@@ -1573,7 +1573,7 @@ test('duplex: trailer metadata', async t => {
 
 test('duplex: trailer metadata using end()', async t => {
   t.plan(12)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   async function processStuff (ctx) {
     ctx.req.on('data', d => {
@@ -1652,7 +1652,7 @@ test('duplex: trailer metadata using end()', async t => {
 
 test('duplex: trailer metadata valid setStatus() and invalid end()', async t => {
   t.plan(12)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
 
   async function processStuff (ctx) {
     ctx.setStatus('foo', 'bar')
@@ -1732,7 +1732,7 @@ test('duplex: trailer metadata valid setStatus() and invalid end()', async t => 
 
 test('duplex: header and trailer metadata', async t => {
   t.plan(13)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   async function processStuff (ctx) {
     ctx.set('asdf', 'qwerty')
     ctx.setStatus('foo', 'bar')

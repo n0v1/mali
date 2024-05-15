@@ -41,7 +41,7 @@ function crashMapper (d) {
 
 test('should handle an error in the handler in req/res app', async t => {
   t.plan(10)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
   function sayHello (ctx) {
@@ -93,7 +93,7 @@ test('should handle an error in the handler in req/res app', async t => {
 
 test('should handle an error in the handler in req/res app where ctx.res is a promise that rejects', async t => {
   t.plan(10)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
   function sayHello (ctx) {
@@ -149,7 +149,7 @@ test('should handle an error in the handler in req/res app where ctx.res is a pr
 
 test('should return error when we set response to error explicitely', async t => {
   t.plan(5)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
   function sayHello (ctx) {
@@ -195,7 +195,7 @@ test('should return error when we set response to error explicitely', async t =>
 
 test('should handle an error with code in the handler in req/res app', async t => {
   t.plan(12)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
   function sayHello (ctx) {
@@ -253,7 +253,7 @@ test('should handle an error with code in the handler in req/res app', async t =
 
 test('should handle an error without code and with details in the handler in req/res app', async t => {
   t.plan(12)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
   function sayHello (ctx) {
@@ -317,7 +317,7 @@ test('should handle custom error in the handler in req/res app', async t => {
   }
 
   t.plan(11)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/helloworld.proto')
 
   function sayHello (ctx) {
@@ -370,7 +370,7 @@ test('should handle custom error in the handler in req/res app', async t => {
 
 test('should handle an error in the handler in res stream app', async t => {
   t.plan(13)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/resstream.proto')
 
   // TODO fix this so it works with newer Beta's of Highland
@@ -439,7 +439,7 @@ test('should handle an error in the handler in res stream app', async t => {
 
 test('should handle an error in the handler in req stream app', async t => {
   t.plan(11)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/reqstream.proto')
 
   async function writeStuff (ctx) {
@@ -536,7 +536,7 @@ test('should handle an error in the handler in req stream app', async t => {
 
 test('should handle error in response stream', async t => {
   t.plan(8)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/resstream.proto')
 
   const data = ['a', 'b', 'c', 'ERROR', 'd']
@@ -604,7 +604,7 @@ test('should handle error in response stream', async t => {
 
 test('should handle an error in the handler of duplex call', async t => {
   t.plan(13)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/duplex.proto')
   async function processStuff (ctx) {
     ctx.req.on('data', d => {
@@ -692,7 +692,7 @@ test('should handle an error in the handler of duplex call', async t => {
 
 test('should handle an error in the handler of duplex call that returns a promise', async t => {
   t.plan(13)
-  const APP_HOST = tu.getHost()
+  const APP_HOST = await tu.getHost()
   const PROTO_PATH = path.resolve(__dirname, './protos/duplex.proto')
   async function processStuff (ctx) {
     return new Promise((resolve, reject) => {
